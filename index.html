@@ -1,1 +1,349 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auguri Lodovica!</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body { width:100%; overflow-x:hidden; }
+body { font-family:'DM Sans',sans-serif; background:#FFF5F7; min-height:100vh; }
+.page { display:none; min-height:100vh; }
+.page.active { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1.5rem 1rem; }
+#page1 { background:linear-gradient(135deg,#FFF0F5 0%,#FFF8E7 100%); position:relative; overflow:hidden; }
+#page1::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle at 20% 20%,#FFD6E7 0%,transparent 50%),radial-gradient(circle at 80% 80%,#FFE8A3 0%,transparent 50%); pointer-events:none; }
+.confetti-wrap { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.dot { position:absolute; border-radius:50%; opacity:.6; animation:fall linear infinite; }
+@keyframes fall { 0%{transform:translateY(-20px) rotate(0deg);opacity:.8} 100%{transform:translateY(110vh) rotate(360deg);opacity:0} }
+.big-title { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,13vw,7rem); color:#E8446A; text-align:center; line-height:1.05; animation:popIn .8s cubic-bezier(.175,.885,.32,1.275) forwards; position:relative; z-index:1; }
+@keyframes popIn { 0%{transform:scale(.5);opacity:0} 100%{transform:scale(1);opacity:1} }
+.subtitle { font-size:clamp(.95rem,4vw,1.4rem); color:#B5476A; margin:.8rem 0 2rem; text-align:center; animation:fadeUp 1s .4s both; position:relative; z-index:1; padding:0 1rem; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.emoji-float { font-size:clamp(1.4rem,5vw,2rem); position:absolute; animation:floatAround linear infinite; pointer-events:none; }
+@keyframes floatAround { 0%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-16px) rotate(10deg)} 100%{transform:translateY(0) rotate(0deg)} }
 
+/* BOTTONI — stile universale che funziona ovunque */
+.btn {
+  display:block;
+  border:none;
+  border-radius:50px;
+  font-family:'DM Sans',sans-serif;
+  font-weight:500;
+  cursor:pointer;
+  text-align:center;
+  text-decoration:none;
+  -webkit-appearance:none;
+  appearance:none;
+  position:relative;
+  z-index:10;
+  touch-action:manipulation;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.btn-primary {
+  background:#E8446A;
+  color:#ffffff !important;
+  padding:1rem 2.2rem;
+  font-size:clamp(1rem,4.5vw,1.15rem);
+  box-shadow:0 8px 30px rgba(232,68,106,.35);
+  min-height:54px;
+  min-width:160px;
+  transition:transform .15s, opacity .15s;
+}
+.btn-primary:active, .btn-primary:focus { opacity:.85; transform:scale(.97); outline:none; }
+.btn-secondary {
+  background:#ffffff;
+  color:#C0304E !important;
+  border:2px solid #E8446A;
+  padding:.8rem 2rem;
+  font-size:clamp(.9rem,4vw,1rem);
+  min-height:50px;
+  min-width:140px;
+  transition:opacity .15s;
+}
+.btn-secondary:active, .btn-secondary:focus { opacity:.7; outline:none; }
+.btn-outline {
+  background:transparent;
+  color:#E8446A !important;
+  border:2px solid #E8446A;
+  padding:.7rem 1.8rem;
+  font-size:clamp(.85rem,3.5vw,.95rem);
+  min-height:48px;
+  transition:opacity .15s;
+}
+.btn-outline:active { opacity:.7; }
+
+#page2 { background:#FFF5FB; }
+.question-box { background:white; border-radius:24px; padding:clamp(1.5rem,5vw,3rem); box-shadow:0 20px 60px rgba(200,60,100,.12); max-width:440px; width:100%; text-align:center; }
+.q-emoji { font-size:clamp(2.2rem,8vw,3rem); margin-bottom:.8rem; }
+.q-title { font-family:'Playfair Display',serif; font-size:clamp(1.3rem,5.5vw,2rem); color:#333; margin-bottom:.4rem; line-height:1.2; }
+.q-sub { color:#888; margin-bottom:1.5rem; font-size:clamp(.85rem,3.5vw,.95rem); }
+.btn-col { display:flex; flex-direction:column; align-items:center; gap:14px; width:100%; }
+
+#page3 { background:#FFF5F7; }
+.loading-box { text-align:center; max-width:360px; width:100%; padding:0 .5rem; }
+.loading-box h2 { font-family:'Playfair Display',serif; font-size:clamp(1.2rem,5vw,1.8rem); color:#E8446A; margin-bottom:.4rem; }
+.loading-box p { color:#999; font-size:clamp(.8rem,3.5vw,.9rem); margin-bottom:1.5rem; }
+.paw-track { height:48px; width:100%; position:relative; overflow:hidden; margin-bottom:1.2rem; background:#FFF0F5; border-radius:20px; display:flex; align-items:center; }
+.cat-walk { font-size:2.2rem; position:absolute; left:-60px; animation:catWalk 2.2s linear infinite; }
+@keyframes catWalk { 0%{left:-60px;transform:scaleX(1)} 49%{left:calc(100% + 20px);transform:scaleX(1)} 50%{left:calc(100% + 20px);transform:scaleX(-1)} 99%{left:-60px;transform:scaleX(-1)} 100%{left:-60px;transform:scaleX(1)} }
+.progress-bar-wrap { background:#FFE0EA; border-radius:20px; height:8px; width:100%; overflow:hidden; margin-bottom:1rem; }
+.progress-bar { height:100%; background:linear-gradient(90deg,#E8446A,#FF8FAB); border-radius:20px; width:0%; transition:width .3s; }
+.loading-text { color:#C0607A; font-size:clamp(.85rem,3.5vw,.95rem); font-style:italic; }
+
+#page4 { background:#F5F0FF; padding:1.5rem .75rem 2rem; justify-content:flex-start; }
+.flights-header { text-align:center; margin-bottom:1.2rem; }
+.flights-header h2 { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,7vw,3rem); color:#E8446A; line-height:1.1; }
+.flights-header p { color:#888; margin-top:.4rem; font-size:clamp(.82rem,3.5vw,.95rem); }
+.flag-badge { display:inline-block; background:#FFE8B0; color:#A06800; border-radius:20px; padding:4px 14px; font-size:clamp(.75rem,3vw,.85rem); font-weight:500; margin-bottom:.6rem; }
+.bp-wrap { width:100%; max-width:520px; margin:0 auto 1rem; }
+.bp { background:white; border-radius:18px; box-shadow:0 6px 30px rgba(100,0,50,.1); overflow:hidden; margin-bottom:1.2rem; }
+.bp-head { padding:1rem 1.2rem .7rem; display:flex; justify-content:space-between; align-items:center; }
+.bp-airline { font-family:'Share Tech Mono',monospace; font-size:clamp(.65rem,2.5vw,.75rem); letter-spacing:.12em; text-transform:uppercase; }
+.bp-type { font-size:clamp(.6rem,2.5vw,.7rem); font-weight:500; border-radius:20px; padding:3px 10px; white-space:nowrap; }
+.bp-route { display:flex; align-items:center; padding:.2rem 1.2rem .8rem; gap:6px; }
+.bp-iata { font-family:'Playfair Display',serif; font-size:clamp(2rem,8vw,2.8rem); color:#1a1a2e; line-height:1; }
+.bp-city { font-size:clamp(.6rem,2.5vw,.7rem); color:#999; margin-top:2px; text-align:center; }
+.bp-line { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; min-width:0; }
+.bp-dashes { border-top:2px dashed #ddd; width:100%; }
+.bp-plane { font-size:clamp(1rem,3.5vw,1.2rem); }
+.bp-duration { font-size:clamp(.58rem,2.2vw,.65rem); color:#bbb; }
+.bp-notch-l,.bp-notch-r { width:20px; height:20px; background:#F5F0FF; border-radius:50%; position:absolute; top:50%; transform:translateY(-50%); box-shadow:inset 0 0 0 1.5px #e0e0e0; }
+.bp-notch-l { left:-10px; }
+.bp-notch-r { right:-10px; }
+.bp-details { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:#f0f0f0; }
+.bp-field { background:white; padding:.6rem .8rem; }
+.bp-label { font-size:clamp(.55rem,2vw,.6rem); text-transform:uppercase; letter-spacing:.1em; color:#bbb; margin-bottom:3px; }
+.bp-value { font-family:'Share Tech Mono',monospace; font-size:clamp(.78rem,3vw,.9rem); color:#222; font-weight:bold; }
+.bp-value.big { font-size:clamp(.9rem,3.5vw,1.1rem); color:#E8446A; }
+.bp-barcode { padding:.8rem 1.2rem; display:flex; align-items:center; gap:.8rem; }
+.barcode-svg { flex:1; min-width:0; }
+.bp-pax { text-align:right; flex-shrink:0; }
+.bp-pax-name { font-family:'Share Tech Mono',monospace; font-size:clamp(.7rem,2.8vw,.85rem); color:#333; font-weight:bold; }
+.bp-pax-label { font-size:clamp(.55rem,2vw,.6rem); color:#bbb; text-transform:uppercase; letter-spacing:.1em; margin-top:2px; }
+.bp-seat-big { font-family:'Playfair Display',serif; font-size:clamp(1.5rem,6vw,2rem); color:#E8446A; line-height:1; }
+.bp-head.outbound { background:linear-gradient(120deg,#FF6B9D,#E8446A); color:white; }
+.bp-head.outbound .bp-airline { color:rgba(255,255,255,.8); }
+.bp-head.outbound .bp-type { background:rgba(255,255,255,.25); color:white; }
+.bp-head.inbound { background:linear-gradient(120deg,#7B61FF,#5535CC); color:white; }
+.bp-head.inbound .bp-airline { color:rgba(255,255,255,.8); }
+.bp-head.inbound .bp-type { background:rgba(255,255,255,.2); color:white; }
+.kings-day-info { max-width:520px; width:100%; background:#FFF8E0; border:1px solid #FFD966; border-radius:18px; padding:1rem 1.2rem; margin-top:.5rem; text-align:center; }
+.kings-day-info h3 { color:#A06800; font-family:'Playfair Display',serif; margin-bottom:.3rem; font-size:clamp(1rem,4vw,1.2rem); }
+.kings-day-info p { color:#8A6000; font-size:clamp(.8rem,3.2vw,.9rem); line-height:1.6; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+  <div class="confetti-wrap" id="confetti"></div>
+  <span class="emoji-float" style="top:10%;left:6%;animation-duration:3s;">🌸</span>
+  <span class="emoji-float" style="top:14%;right:8%;animation-duration:4s;animation-delay:1s;">✨</span>
+  <span class="emoji-float" style="bottom:18%;left:10%;animation-duration:3.5s;animation-delay:.5s;">🎀</span>
+  <span class="emoji-float" style="bottom:22%;right:7%;animation-duration:4.5s;animation-delay:1.5s;">🎊</span>
+  <div class="big-title">Tanti<br>Auguri! 🎂</div>
+  <p class="subtitle">C'è qualcosa di speciale che ti aspetta...</p>
+  <button class="btn btn-primary" style="margin-top:.5rem;z-index:10;" onclick="goTo(2)">🎁 Clicca per scoprire il tuo regalo</button>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+  <div class="question-box">
+    <div class="q-emoji" id="q-emoji">🤔</div>
+    <div class="q-title" id="q-title">Sei pronta per scoprire il tuo regalo?</div>
+    <div class="q-sub" id="q-sub">Potrebbe cambiare la tua vita (o quasi).</div>
+    <div class="btn-col">
+      <button class="btn btn-primary" id="yes-btn" onclick="yesClick()">Sì! 🙌</button>
+      <button class="btn btn-secondary" id="no-btn" onclick="noClick()">No... forse no</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+  <div class="loading-box">
+    <h2>Caricamento in corso...</h2>
+    <p>di qualcosa di assolutamente fantastico e bellissimo ✨</p>
+    <div class="paw-track"><span class="cat-walk">🐱</span></div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="prog-bar"></div></div>
+    <div class="loading-text" id="load-msg">Preparando la magia...</div>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div id="page4" class="page">
+  <div class="flights-header">
+    <div class="flag-badge">🇳🇱 King's Day — 26 aprile 2025</div>
+    <h2>Il tuo regalo: Amsterdam! 🎉</h2>
+    <p>bro festeggi il king's day cazzooo!!!!!</p>
+  </div>
+
+  <div class="bp-wrap">
+    <!-- ANDATA -->
+    <div class="bp">
+      <div class="bp-head outbound">
+        <div>
+          <div class="bp-airline">Ryanair · FR 1234</div>
+          <div style="font-size:clamp(.95rem,4vw,1.1rem);font-weight:700;margin-top:2px;">Andata</div>
+        </div>
+        <div class="bp-type">BOARDING PASS</div>
+      </div>
+      <div class="bp-route">
+        <div style="text-align:left"><div class="bp-iata">PSA</div><div class="bp-city">Pisa</div></div>
+        <div class="bp-line"><div class="bp-dashes"></div><div class="bp-plane">✈</div><div class="bp-duration">1h 55m</div></div>
+        <div style="text-align:right"><div class="bp-iata">EIN</div><div class="bp-city">Eindhoven</div></div>
+      </div>
+      <div style="position:relative;height:20px;"><div class="bp-notch-l"></div><div style="border-top:2px dashed #e0e0e0;margin:10px 10px 0;"></div><div class="bp-notch-r"></div></div>
+      <div class="bp-details">
+        <div class="bp-field"><div class="bp-label">Data</div><div class="bp-value">24 APR</div></div>
+        <div class="bp-field"><div class="bp-label">Partenza</div><div class="bp-value big">09:35</div></div>
+        <div class="bp-field"><div class="bp-label">Arrivo</div><div class="bp-value big">11:30</div></div>
+        <div class="bp-field"><div class="bp-label">Da</div><div class="bp-value">PSA</div></div>
+        <div class="bp-field"><div class="bp-label">A</div><div class="bp-value">EIN</div></div>
+        <div class="bp-field"><div class="bp-label">Classe</div><div class="bp-value">ECO</div></div>
+      </div>
+      <div class="bp-barcode">
+        <svg class="barcode-svg" height="44" viewBox="0 0 180 50"><rect x="0" y="0" width="3" height="50" fill="#222"/><rect x="5" y="0" width="1" height="50" fill="#222"/><rect x="8" y="0" width="4" height="50" fill="#222"/><rect x="14" y="0" width="2" height="50" fill="#222"/><rect x="18" y="0" width="1" height="50" fill="#222"/><rect x="21" y="0" width="3" height="50" fill="#222"/><rect x="26" y="0" width="1" height="50" fill="#222"/><rect x="29" y="0" width="5" height="50" fill="#222"/><rect x="36" y="0" width="2" height="50" fill="#222"/><rect x="40" y="0" width="1" height="50" fill="#222"/><rect x="43" y="0" width="4" height="50" fill="#222"/><rect x="49" y="0" width="1" height="50" fill="#222"/><rect x="52" y="0" width="2" height="50" fill="#222"/><rect x="56" y="0" width="3" height="50" fill="#222"/><rect x="61" y="0" width="1" height="50" fill="#222"/><rect x="64" y="0" width="5" height="50" fill="#222"/><rect x="71" y="0" width="2" height="50" fill="#222"/><rect x="75" y="0" width="1" height="50" fill="#222"/><rect x="78" y="0" width="3" height="50" fill="#222"/><rect x="83" y="0" width="2" height="50" fill="#222"/><rect x="87" y="0" width="4" height="50" fill="#222"/><rect x="93" y="0" width="1" height="50" fill="#222"/><rect x="96" y="0" width="2" height="50" fill="#222"/><rect x="100" y="0" width="5" height="50" fill="#222"/><rect x="107" y="0" width="1" height="50" fill="#222"/><rect x="110" y="0" width="3" height="50" fill="#222"/><rect x="115" y="0" width="2" height="50" fill="#222"/><rect x="119" y="0" width="1" height="50" fill="#222"/><rect x="122" y="0" width="4" height="50" fill="#222"/><rect x="128" y="0" width="2" height="50" fill="#222"/><rect x="132" y="0" width="3" height="50" fill="#222"/><rect x="137" y="0" width="1" height="50" fill="#222"/><rect x="140" y="0" width="5" height="50" fill="#222"/><rect x="147" y="0" width="2" height="50" fill="#222"/><rect x="151" y="0" width="1" height="50" fill="#222"/><rect x="154" y="0" width="3" height="50" fill="#222"/><rect x="159" y="0" width="4" height="50" fill="#222"/><rect x="165" y="0" width="1" height="50" fill="#222"/><rect x="168" y="0" width="2" height="50" fill="#222"/><rect x="172" y="0" width="5" height="50" fill="#222"/><rect x="178" y="0" width="2" height="50" fill="#222"/></svg>
+        <div class="bp-pax">
+          <div class="bp-seat-big">4B</div>
+          <div class="bp-pax-label">Seat</div>
+          <div style="margin-top:6px"><div class="bp-pax-name">MICCHI LODOVICA</div><div class="bp-pax-label">Passenger</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RITORNO -->
+    <div class="bp">
+      <div class="bp-head inbound">
+        <div>
+          <div class="bp-airline">Ryanair · FR 5678</div>
+          <div style="font-size:clamp(.95rem,4vw,1.1rem);font-weight:700;margin-top:2px;">Ritorno</div>
+        </div>
+        <div class="bp-type">BOARDING PASS</div>
+      </div>
+      <div class="bp-route">
+        <div style="text-align:left"><div class="bp-iata">EIN</div><div class="bp-city">Eindhoven</div></div>
+        <div class="bp-line"><div class="bp-dashes"></div><div class="bp-plane">✈</div><div class="bp-duration">2h 30m</div></div>
+        <div style="text-align:right"><div class="bp-iata">PSA</div><div class="bp-city">Pisa</div></div>
+      </div>
+      <div style="position:relative;height:20px;"><div class="bp-notch-l"></div><div style="border-top:2px dashed #e0e0e0;margin:10px 10px 0;"></div><div class="bp-notch-r"></div></div>
+      <div class="bp-details">
+        <div class="bp-field"><div class="bp-label">Data</div><div class="bp-value">28 APR</div></div>
+        <div class="bp-field"><div class="bp-label">Partenza</div><div class="bp-value big">16:20</div></div>
+        <div class="bp-field"><div class="bp-label">Arrivo</div><div class="bp-value big">18:50</div></div>
+        <div class="bp-field"><div class="bp-label">Da</div><div class="bp-value">EIN</div></div>
+        <div class="bp-field"><div class="bp-label">A</div><div class="bp-value">PSA</div></div>
+        <div class="bp-field"><div class="bp-label">Classe</div><div class="bp-value">ECO</div></div>
+      </div>
+      <div class="bp-barcode">
+        <svg class="barcode-svg" height="44" viewBox="0 0 180 50"><rect x="0" y="0" width="2" height="50" fill="#222"/><rect x="4" y="0" width="4" height="50" fill="#222"/><rect x="10" y="0" width="1" height="50" fill="#222"/><rect x="13" y="0" width="3" height="50" fill="#222"/><rect x="18" y="0" width="2" height="50" fill="#222"/><rect x="22" y="0" width="5" height="50" fill="#222"/><rect x="29" y="0" width="1" height="50" fill="#222"/><rect x="32" y="0" width="2" height="50" fill="#222"/><rect x="36" y="0" width="4" height="50" fill="#222"/><rect x="42" y="0" width="1" height="50" fill="#222"/><rect x="45" y="0" width="3" height="50" fill="#222"/><rect x="50" y="0" width="2" height="50" fill="#222"/><rect x="54" y="0" width="5" height="50" fill="#222"/><rect x="61" y="0" width="1" height="50" fill="#222"/><rect x="64" y="0" width="3" height="50" fill="#222"/><rect x="69" y="0" width="2" height="50" fill="#222"/><rect x="73" y="0" width="1" height="50" fill="#222"/><rect x="76" y="0" width="4" height="50" fill="#222"/><rect x="82" y="0" width="3" height="50" fill="#222"/><rect x="87" y="0" width="2" height="50" fill="#222"/><rect x="91" y="0" width="5" height="50" fill="#222"/><rect x="98" y="0" width="1" height="50" fill="#222"/><rect x="101" y="0" width="2" height="50" fill="#222"/><rect x="105" y="0" width="3" height="50" fill="#222"/><rect x="110" y="0" width="4" height="50" fill="#222"/><rect x="116" y="0" width="1" height="50" fill="#222"/><rect x="119" y="0" width="5" height="50" fill="#222"/><rect x="126" y="0" width="2" height="50" fill="#222"/><rect x="130" y="0" width="1" height="50" fill="#222"/><rect x="133" y="0" width="3" height="50" fill="#222"/><rect x="138" y="0" width="2" height="50" fill="#222"/><rect x="142" y="0" width="4" height="50" fill="#222"/><rect x="148" y="0" width="1" height="50" fill="#222"/><rect x="151" y="0" width="5" height="50" fill="#222"/><rect x="158" y="0" width="2" height="50" fill="#222"/><rect x="162" y="0" width="3" height="50" fill="#222"/><rect x="167" y="0" width="1" height="50" fill="#222"/><rect x="170" y="0" width="4" height="50" fill="#222"/><rect x="176" y="0" width="2" height="50" fill="#222"/></svg>
+        <div class="bp-pax">
+          <div class="bp-seat-big">7A</div>
+          <div class="bp-pax-label">Seat</div>
+          <div style="margin-top:6px"><div class="bp-pax-name">MICCHI LODOVICA</div><div class="bp-pax-label">Passenger</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kings-day-info">
+    <h3>🧡 Cos'è il King's Day?</h3>
+    <p>Il 26 aprile Amsterdam si trasforma nella festa più grande d'Olanda: tutto è arancione, il re festeggia il compleanno e la città diventa un enorme mercatino all'aperto. Musica, battelli sul canale, gente che balla ovunque. È magico.</p>
+  </div>
+  <button class="btn btn-outline" style="margin-top:1.2rem;" onclick="restart()">↩ Ricominciare dall'inizio</button>
+</div>
+
+<script>
+var stage = 0;
+var noCount = 0;
+
+var stages = [
+  { emoji:'🤔', title:'Sei pronta per scoprire il tuo regalo?',    sub:'Potrebbe cambiare la tua vita (o quasi).',              yes:'Sì! 🙌' },
+  { emoji:'😊', title:'Ma sicura sicura?',                          sub:'Perché una volta che lo vedi non si torna indietro...', yes:'Sì, sicura! 💖' },
+  { emoji:'🥺', title:'Ma sicurissima?',                            sub:'Ok ok, te lo mostro! Preparati...',                    yes:'SICURISSIMA!! 🎉' }
+];
+
+var loadMsgs = ['Preparando la magia...','Radunando i gatti del web...','Caricando il cielo arancione...','Aggiungendo scintille ✨...','Quasi quasi quasi...'];
+
+function goTo(n) {
+  var pages = document.querySelectorAll('.page');
+  for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
+  document.getElementById('page' + n).classList.add('active');
+  window.scrollTo(0, 0);
+  if (n === 3) startLoading();
+}
+
+function yesClick() {
+  stage++;
+  if (stage >= stages.length) { goTo(3); return; }
+  var s = stages[stage];
+  document.getElementById('q-emoji').textContent = s.emoji;
+  document.getElementById('q-title').textContent = s.title;
+  document.getElementById('q-sub').textContent = s.sub;
+  var y = document.getElementById('yes-btn');
+  y.textContent = s.yes;
+  var sizes = ['1rem', '1.15rem', '1.3rem'];
+  var pads  = ['.9rem 2.2rem', '1rem 2.8rem', '1.1rem 3.2rem'];
+  y.style.fontSize = sizes[stage];
+  y.style.padding  = pads[stage];
+  var n = document.getElementById('no-btn');
+  if (stage >= 2) n.style.display = 'none';
+}
+
+function noClick() {
+  noCount++;
+  var n = document.getElementById('no-btn');
+  var shakes = [22, -18, 14, -10, 6, 0];
+  var i = 0;
+  var iv = setInterval(function() {
+    n.style.transform = 'translateX(' + (shakes[i] || 0) + 'px)';
+    i++;
+    if (i >= shakes.length) { clearInterval(iv); n.style.transform = ''; }
+  }, 60);
+  if (noCount >= 2) setTimeout(function() { n.style.display = 'none'; }, 400);
+}
+
+function startLoading() {
+  var pct = 0, mi = 0;
+  var bar = document.getElementById('prog-bar');
+  var msg = document.getElementById('load-msg');
+  msg.textContent = loadMsgs[0];
+  var iv = setInterval(function() {
+    pct += Math.random() * 8 + 3;
+    if (pct >= 100) { pct = 100; clearInterval(iv); setTimeout(function(){ goTo(4); }, 600); }
+    bar.style.width = pct + '%';
+    var newMi = Math.min(Math.floor(pct / 20), loadMsgs.length - 1);
+    if (newMi !== mi) { mi = newMi; msg.textContent = loadMsgs[mi]; }
+  }, 200);
+}
+
+function restart() {
+  stage = 0; noCount = 0;
+  var s = stages[0];
+  document.getElementById('q-emoji').textContent = s.emoji;
+  document.getElementById('q-title').textContent = s.title;
+  document.getElementById('q-sub').textContent = s.sub;
+  var y = document.getElementById('yes-btn');
+  y.textContent = s.yes; y.style.fontSize = '1rem'; y.style.padding = '.9rem 2.2rem';
+  var n = document.getElementById('no-btn'); n.style.display = ''; n.style.transform = '';
+  document.getElementById('prog-bar').style.width = '0%';
+  goTo(1);
+}
+
+// Confetti
+(function() {
+  var wrap = document.getElementById('confetti');
+  var colors = ['#FFB3C6','#FFD966','#A8E6CF','#FFA3B5','#FFDAB9','#B5D3FF'];
+  for (var i = 0; i < 28; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'dot';
+    var s = Math.random() * 10 + 5;
+    dot.style.cssText = 'width:' + s + 'px;height:' + s + 'px;background:' + colors[Math.floor(Math.random()*colors.length)] + ';left:' + Math.random()*100 + '%;animation-duration:' + (3+Math.random()*5) + 's;animation-delay:' + Math.random()*5 + 's;';
+    wrap.appendChild(dot);
+  }
+})();
+</script>
+</body>
+</html>
